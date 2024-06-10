@@ -17,7 +17,8 @@ app.use(express.json());
 app.use(cookieParser())
 const corsOptions = {
     // origin:"http://localhost:3000",
-    origin:"https://new-twitter-clone-bc.vercel.app/",
+    // origin:"https://new-twitter-clone-bc.vercel.app/",
+    origin:"https://new-twitter-clone-fe.vercel.app/",
     credentials:true
 }
 app.use(cors(corsOptions));
