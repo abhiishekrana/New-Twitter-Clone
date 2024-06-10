@@ -16,14 +16,13 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cookieParser())
 
-app.use((rs,next)=>{
+app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'https://genie-ai0.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
+    next();
   });
-  
-
 // const corsOptions = {
 //     origin:"https://new-twitter-clone-fe.vercel.app/",
 //     // origin:"https://new-twitter-clone-bc.vercel.app/",
