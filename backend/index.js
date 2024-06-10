@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import databaseConnection from "./config/database.js";
 import userRoute from "./routes/userRoute.js"
 import tweetRoute from "./routes/tweetRoute.js"
-const cors = require('cors');
+var cors = require('cors')
 
 const app = express()
 databaseConnection();
@@ -16,27 +16,13 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cookieParser())
 
-// Allow requests from specific origins
-const allowedOrigins = ['https://new-twitter-clone-fe.vercel.app', 'https://new-twitter-clone-bc.vercel.app','http://localhost:3000'];
-
-// const corsOptions = {
-//     origin:"http://localhost:3000",
-//     // origin:"https://new-twitter-clone-bc.vercel.app/",
-//     // origin:"https://new-twitter-clone-fe.vercel.app/",
-//     credentials:true
-// }
 
 const corsOptions = {
-    origin: function(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true // Allow credentials (cookies, authorization headers, etc.)
-};
-
+    origin:"https://new-twitter-clone-fe.vercel.app/",
+    // origin:"https://new-twitter-clone-bc.vercel.app/",
+    // origin:"https://new-twitter-clone-fe.vercel.app/",
+    credentials:true
+}
 app.use(cors(corsOptions));
 //api
 app.use("/api/v1/user",userRoute)
