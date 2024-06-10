@@ -15,15 +15,14 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cookieParser())
-app.use(function (req, res, next) {
-    // Enabling CORS
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-    // Handle preflight requests
-    next();
-    });
 
+app.use((rs,next)=>{
+  res.setHeader('Access-Control-Allow-Origin', 'https://genie-ai0.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+  });
+  
 
 // const corsOptions = {
 //     origin:"https://new-twitter-clone-fe.vercel.app/",
