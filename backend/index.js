@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import databaseConnection from "./config/database.js";
 import userRoute from "./routes/userRoute.js"
 import tweetRoute from "./routes/tweetRoute.js"
-var cors = require('cors')
+const cors = require('cors');
 
 const app = express()
 databaseConnection();
