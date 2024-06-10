@@ -16,18 +16,7 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cookieParser())
 
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  // another common pattern
-  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
-    next();
-  });
+
 // const corsOptions = {
 //     origin:"https://new-twitter-clone-fe.vercel.app/",
 //     // origin:"https://new-twitter-clone-bc.vercel.app/",
@@ -39,7 +28,7 @@ app.use(function (req, res, next) {
 // Allow requests from specific origins
 const allowedOrigins = [
     'https://new-twitter-clone-fe.vercel.app',
-    'https://new-twitter-clone-bc.vercel.app',
+    // 'https://new-twitter-clone-bc.vercel.app',
     'http://localhost:3000'
   ];
   
