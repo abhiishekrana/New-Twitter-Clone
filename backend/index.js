@@ -16,6 +16,14 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cookieParser())
 
+// Use CORS middleware
+// app.use(cors({
+//   origin: 'https://new-twitter-clone-fe.vercel.app', // Specify the allowed origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true
+// }));
+
 
 // const corsOptions = {
 //     origin:"https://new-twitter-clone-fe.vercel.app/",
@@ -26,24 +34,35 @@ app.use(cookieParser())
 
 
 // Allow requests from specific origins
-const allowedOrigins = [
-    'https://new-twitter-clone-fe.vercel.app',
-    // 'https://new-twitter-clone-bc.vercel.app',
-    'http://localhost:3000'
-  ];
+// const allowedOrigins = [
+//     'https://new-twitter-clone-fe.vercel.app',
+//     // 'https://new-twitter-clone-bc.vercel.app',
+//     'http://localhost:3000'
+//   ];
   
-  const corsOptions = {
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true // Allow credentials (cookies, authorization headers, etc.)
-  };
+//   const corsOptions = {
+//     origin: function (origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     },
+//     credentials: true // Allow credentials (cookies, authorization headers, etc.)
+//   };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+
+// Use CORS middleware
+app.use(cors({
+    origin: 'https://new-twitter-clone-fe.vercel.app', // Specify the allowed origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
+// Enable pre-flight across-the-board
+app.options('*', cors());
 //api
 app.use("/api/v1/user",userRoute)
 app.use("/api/v1/tweet",tweetRoute)
