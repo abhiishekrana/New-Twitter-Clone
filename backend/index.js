@@ -21,7 +21,7 @@ app.use(cors(corsOptions));
 
 // CORS Headers Middleware
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // You can use '*' for allowing all origins
+    res.setHeader('Access-Control-Allow-Origin', 'https://new-twitter-clone-fe.vercel.app'); // You can use '*' for allowing all origins
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Max-Age', '1800');
     res.setHeader('Access-Control-Allow-Headers', 'content-type, Authorization');
