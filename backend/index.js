@@ -1,84 +1,48 @@
-import express from "express"
-import cookieParser from "cookie-parser";
-import databaseConnection from "./config/database.js";
-import userRoute from "./routes/userRoute.js"
-import tweetRoute from "./routes/tweetRoute.js"
+import express from 'express';
+import dotenv from 'dotenv';
+import databaseConnection from './config/database.js';
+import cookieParser from 'cookie-parser';
+import userRoute from './routes/userRoute.js';
+import tweetRoute from './routes/tweetRoute.js';
 import cors from 'cors';
 
-const app = express()
+dotenv.config({
+    path: '.env'
+});
 databaseConnection();
-const port=8080
 
-//middlewares
-app.use(express.urlencoded({
-    extended:true
-}));
-app.use(express.json());
-app.use(cookieParser())
+const app = express();
 
-// Use CORS middleware
-// app.use(cors({
-//   origin: 'https://new-twitter-clone-fe.vercel.app', // Specify the allowed origin
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-//   credentials: true
-// }));
-
-
-// const corsOptions = {
-//     origin:"https://new-twitter-clone-fe.vercel.app/",
-//     // origin:"https://new-twitter-clone-bc.vercel.app/",
-//     // origin:"https://new-twitter-clone-fe.vercel.app/",
-//     credentials:true
-// }
-
-
-// Allow requests from specific origins
-// const allowedOrigins = [
-//     'https://new-twitter-clone-fe.vercel.app',
-//     // 'https://new-twitter-clone-bc.vercel.app',
-//     'http://localhost:3000'
-//   ];
-  
-//   const corsOptions = {
-//     origin: function (origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
-//     credentials: true // Allow credentials (cookies, authorization headers, etc.)
-//   };
-
-// app.use(cors(corsOptions));
-
-// Use CORS middleware
-app.use(cors({
-    origin: 'https://new-twitter-clone-fe.vercel.app', // Specify the allowed origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+const corsOptions = {
+    origin: 'https://new-twitter-clone-fe.vercel.app',
     credentials: true
-}));
+};
+app.use(cors(corsOptions));
 
-// Enable pre-flight across-the-board
-app.options('*', cors());
-//api
-app.use("/api/v1/user",userRoute)
-app.use("/api/v1/tweet",tweetRoute)
+// CORS Headers Middleware
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://new-twitter-clone-fe.vercel.app'); // You can use '*' for allowing all origins
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Max-Age', '1800');
+    res.setHeader('Access-Control-Allow-Headers', 'content-type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, PATCH, OPTIONS');
+    // Optional: Setting the content-type header
+    // res.setHeader('Content-Type', 'application/json;charset=utf-8');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
 
-app.get("/",(req,res)=>{
-    res.status(200).json({
-        message:"coming from backend..."
-    })
-})
-app.get("/any",(req,res)=>{
-    res.status(200).json({
-        message:"Sab thik hai..."
-    })
-})
+// Middleware setup
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 
-app.listen(port,()=>{
-    console.log(`Server is listing at port ${port}`);
-})
+// API routes
+app.use('/api/v1/user', userRoute);
+app.use('/api/v1/tweet', tweetRoute);
 
+app.listen(process.env.PORT, () => {
+    console.log(`Server listening at port ${process.env.PORT}`);
+});
